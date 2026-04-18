@@ -42,7 +42,7 @@ def check_verdict(text: str) -> dict[str, Any]:
     patterns = [
         ("CONDITIONAL GO", r"CONDITIONAL\s+GO"),
         ("NO-GO", r"NO[\s-]?GO"),
-        ("GO", r"(?<![A-Z\-])GO(?![A-Z])"),
+        ("GO", r"(?<!CONDITIONAL\s)(?<!NO-)(?<!NO\s)\bGO\b"),
     ]
     found: list[str] = []
     for name, pat in patterns:

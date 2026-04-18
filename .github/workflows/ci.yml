@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate repository structure
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          required = [
+              'README.md',
+              'SKILL.md',
+              'scripts/check_four_piece.py',
+              'scripts/README.md',
+              'evals/evals.json',
+              'references/anti-groupthink.md',
+              'tests/fixtures/valid-review-report.md',
+              'tests/fixtures/invalid-review-report.md',
+          ]
+          missing = [path for path in required if not Path(path).exists()]
+          if missing:
+              raise SystemExit(f'Missing required files: {missing}')
+
+          data = json.loads(Path('evals/evals.json').read_text(encoding='utf-8'))
+          if data.get('skill_name') != 'expert-review-panel':
+              raise SystemExit('evals/evals.json has unexpected skill_name')
+          if len(data.get('evals', [])) < 3:
+              raise SystemExit('expected at least 3 eval cases')
+
+          print('Repository structure looks good.')
+          PY
+
+      - name: Compile validator
+        run: python -m py_compile scripts/check_four_piece.py
+
+      - name: Valid fixture should pass
+        run: python scripts/check_four_piece.py tests/fixtures/valid-review-report.md
+
+      - name: Invalid fixture should fail
+        run: |
+          if python scripts/check_four_piece.py tests/fixtures/invalid-review-report.md; then
+            echo 'Expected invalid fixture to fail validation'
+            exit 1
+          fi
+          echo 'Invalid fixture failed as expected.'
