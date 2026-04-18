@@ -14,6 +14,7 @@
 - 最新发布：<https://github.com/491034170/expert-review-panel/releases/latest>
 - 主技能说明：[`SKILL.md`](./SKILL.md)
 - Prompt recipes：[`examples/prompt-recipes.md`](./examples/prompt-recipes.md)
+- 完整样例报告：[`examples/full-sample-report-ssci-abstract.md`](./examples/full-sample-report-ssci-abstract.md)
 - 输出解剖：[`examples/output-anatomy.md`](./examples/output-anatomy.md)
 - 反群体思维设计：[`references/anti-groupthink.md`](./references/anti-groupthink.md)
 - 输出自检脚本：[`scripts/check_four_piece.py`](./scripts/check_four_piece.py)
