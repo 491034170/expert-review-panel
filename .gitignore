@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Skill packaging artifacts
+*.skill
+build/
+dist/
+
+# Local scratchpad
+.claude-local/
+scratch/
