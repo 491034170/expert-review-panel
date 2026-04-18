@@ -13,6 +13,8 @@
 快速链接：
 - 最新发布：<https://github.com/491034170/expert-review-panel/releases/latest>
 - 主技能说明：[`SKILL.md`](./SKILL.md)
+- Prompt recipes：[`examples/prompt-recipes.md`](./examples/prompt-recipes.md)
+- 输出解剖：[`examples/output-anatomy.md`](./examples/output-anatomy.md)
 - 反群体思维设计：[`references/anti-groupthink.md`](./references/anti-groupthink.md)
 - 输出自检脚本：[`scripts/check_four_piece.py`](./scripts/check_four_piece.py)
 - 如果这个项目对你有帮助，欢迎点个 Star：<https://github.com/491034170/expert-review-panel/stargazers>
