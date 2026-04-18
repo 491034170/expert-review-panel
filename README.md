@@ -6,6 +6,7 @@
 
 [![Release](https://img.shields.io/github/v/release/491034170/expert-review-panel)](https://github.com/491034170/expert-review-panel/releases/latest)
 [![CI](https://github.com/491034170/expert-review-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/491034170/expert-review-panel/actions/workflows/ci.yml)
+[![GitHub Repo stars](https://img.shields.io/github/stars/491034170/expert-review-panel)](https://github.com/491034170/expert-review-panel/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Claude Skill](https://img.shields.io/badge/built%20for-Claude%20Skill-8A2BE2)](https://docs.claude.com)
 
@@ -14,6 +15,7 @@
 - 主技能说明：[`SKILL.md`](./SKILL.md)
 - 反群体思维设计：[`references/anti-groupthink.md`](./references/anti-groupthink.md)
 - 输出自检脚本：[`scripts/check_four_piece.py`](./scripts/check_four_piece.py)
+- 如果这个项目对你有帮助，欢迎点个 Star：<https://github.com/491034170/expert-review-panel/stargazers>
 
 ---
 
