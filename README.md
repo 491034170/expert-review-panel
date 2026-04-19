@@ -5,12 +5,14 @@
 > A Claude skill for ruthless pre-submission review: papers, business plans, pitch decks, code, competition materials, and creative work — reviewed by a simulated multi-expert panel before you ship.
 
 [![Release](https://img.shields.io/github/v/release/491034170/expert-review-panel)](https://github.com/491034170/expert-review-panel/releases/latest)
+[![Live Guide](https://img.shields.io/badge/Live_Guide-GitHub_Pages-4FACFE)](https://491034170.github.io/expert-review-panel/)
 [![CI](https://github.com/491034170/expert-review-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/491034170/expert-review-panel/actions/workflows/ci.yml)
 [![GitHub Repo stars](https://img.shields.io/github/stars/491034170/expert-review-panel)](https://github.com/491034170/expert-review-panel/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Claude Skill](https://img.shields.io/badge/built%20for-Claude%20Skill-8A2BE2)](https://docs.claude.com)
 
 快速链接：
+- Live Guide：<https://491034170.github.io/expert-review-panel/>
 - 最新发布：<https://github.com/491034170/expert-review-panel/releases/latest>
 - 主技能说明：[`SKILL.md`](./SKILL.md)
 - Prompt recipes：[`examples/prompt-recipes.md`](./examples/prompt-recipes.md)

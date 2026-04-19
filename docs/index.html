@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="expert-review-panel：严审型 Claude Skill，面向论文、商业计划、代码、竞赛材料与创意作品的提交前高压预审。" />
+  <title>expert-review-panel · Live Guide</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --panel: rgba(12, 23, 40, 0.86);
+      --panel-2: rgba(18, 33, 57, 0.9);
+      --line: rgba(120, 182, 255, 0.22);
+      --text: #eaf2ff;
+      --muted: #9eb3d1;
+      --accent: #63b3ff;
+      --accent-2: #9b7bff;
+      --danger: #ff7b7b;
+      --ok: #46d39a;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(99, 179, 255, 0.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(155, 123, 255, 0.14), transparent 24%),
+        linear-gradient(180deg, #07101c 0%, #0a1527 52%, #07101c 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    .hero {
+      padding: 72px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 24px 0 auto auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(99, 179, 255, 0.18), transparent 70%);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+      font-size: 13px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .sub {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .actions, .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(99,179,255,.24), rgba(155,123,255,.22));
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .stat-num { font-size: 30px; font-weight: 800; }
+    .stat-label { color: var(--muted); font-size: 14px; }
+    section { padding: 18px 0 14px; }
+    h2 {
+      font-size: 28px;
+      margin: 0 0 18px;
+      letter-spacing: -0.02em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    ul { padding-left: 20px; margin: 12px 0 0; }
+    li + li { margin-top: 8px; }
+    .pill {
+      display: inline-block;
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 12px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .flow .card strong { display: block; margin-bottom: 8px; }
+    .tag {
+      display: inline-block;
+      margin-right: 8px;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+    .verdict {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .verdict span {
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .go { background: rgba(70, 211, 154, .14); border-color: rgba(70, 211, 154, .3); color: #a6f1cf; }
+    .cond { background: rgba(99, 179, 255, .14); border-color: rgba(99, 179, 255, .3); color: #bfe0ff; }
+    .nogo { background: rgba(255, 123, 123, .14); border-color: rgba(255, 123, 123, .3); color: #ffc2c2; }
+    footer {
+      padding: 36px 0 64px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+    @media (max-width: 720px) {
+      .hero { padding-top: 56px; }
+      .btn, .badge { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">Claude Skill · High-pressure pre-submission review</div>
+      <h1>expert-review-panel</h1>
+      <p class="sub">
+        一个面向论文、商业计划、代码、竞赛材料与创意作品的严审型 Claude Skill。
+        目标不是“给点温和建议”，而是在你真正提交之前，先把最可能致命的问题翻出来。
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/491034170/expert-review-panel/releases/latest">下载最新 Release</a>
+        <a class="btn" href="https://github.com/491034170/expert-review-panel">查看源码仓库</a>
+        <a class="btn" href="https://github.com/491034170/expert-review-panel/blob/main/SKILL.md">阅读 SKILL.md</a>
+      </div>
+      <div class="badges">
+        <span class="badge">输出结构：专家报告 + P0/P1/P2 + 最终裁决</span>
+        <span class="badge">适配场景：论文 / BP / 代码 / 比赛 / 创意文案</span>
+        <span class="badge">设计重点：反群体思维、少数意见保护、主席自我对抗</span>
+      </div>
+      <div class="stats">
+        <div class="card"><div class="stat-num">5 阶段</div><div class="stat-label">接收分诊 → 独立评审 → 交叉辩论 → 主席裁决 → 输出自检</div></div>
+        <div class="card"><div class="stat-num">P0 / P1 / P2</div><div class="stat-label">问题按致命程度排序，而不是平均用力</div></div>
+        <div class="card"><div class="stat-num">4 件套</div><div class="stat-label">位置 + 证据 + 原因 + 修改方向</div></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>它适合什么场景？</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="pill">Academic</span>
+          <strong>论文 / Thesis / 基金申请</strong>
+          <ul>
+            <li>投稿前发现论证断点、证据不足、结论跳跃</li>
+            <li>模拟 harsh reviewer / supervisor / external examiner</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="pill">Business</span>
+          <strong>商业计划 / 路演材料 / 投前内审</strong>
+          <ul>
+            <li>提前暴露一票否决项、商业逻辑断裂、风险遗漏</li>
+            <li>帮助你在正式见投资人前先做高压演练</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="pill">Engineering</span>
+          <strong>代码 / 架构方案 / 技术评审</strong>
+          <ul>
+            <li>不只挑格式，而是逼近生产事故、扩展性、可维护性问题</li>
+            <li>适合上线前 review、方案评审、安全敏感变更</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="pill">Competition & Creative</span>
+          <strong>竞赛材料 / 答辩 PPT / 创意作品</strong>
+          <ul>
+            <li>帮你从评委视角找跑题、说服力不足、叙事薄弱的问题</li>
+            <li>适合赛前 dry-run 与创意文案的狠评</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>它为什么比“普通让 AI 看一眼”更有价值？</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>1. 不是泛泛总结，而是强制下结论</strong>
+          <p>最后必须给出明确裁决，而不是模糊地说“整体不错，建议继续优化”。</p>
+          <div class="verdict">
+            <span class="go">GO</span>
+            <span class="cond">CONDITIONAL GO</span>
+            <span class="nogo">NO-GO</span>
+          </div>
+        </div>
+        <div class="card">
+          <strong>2. 不是“多专家”就完事，而是防止一起漏判</strong>
+          <p>这个项目明确针对 LLM 多角色评审常见的 shared blindness，加入盲评、魔鬼代言人、少数意见保护、一致通过警示等反群体思维机制。</p>
+        </div>
+        <div class="card">
+          <strong>3. 不是只给 prompt，而是带质量闸门</strong>
+          <p>仓库里有输出模板、样例报告、验证脚本、基础 eval 与 GitHub Actions，适合公开分发和持续维护。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>工作流 / Review flow</h2>
+      <div class="flow">
+        <div class="card"><strong>阶段 0 · 接收与分诊</strong>判断作品类型、目标场景、风险等级，不同作品走不同专家库。</div>
+        <div class="card"><strong>阶段 1 · 独立评审</strong>每位专家先盲评，给出问题、优先级与置信度，减少互相带节奏。</div>
+        <div class="card"><strong>阶段 2 · 交叉辩论</strong>暴露分歧、引入魔鬼代言人，逼出真正关键的冲突点。</div>
+        <div class="card"><strong>阶段 3 · 主席裁决</strong>统一口径、校准阈值、给出 GO / CONDITIONAL GO / NO-GO。</div>
+        <div class="card"><strong>阶段 4 · 输出自检</strong>在交付前检查四件套密度、优先级标签、模板占位符残留等格式问题。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>怎么安装 / How to install</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>方式一：下载打包版本</strong>
+          <ul>
+            <li>打开 <a href="https://github.com/491034170/expert-review-panel/releases/latest">Latest Release</a></li>
+            <li>下载 <code>expert-review-panel.skill</code> 或版本化安装包</li>
+            <li>导入 Claude Desktop / Claude Code</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>方式二：从源码安装</strong>
+          <pre><code>git clone https://github.com/491034170/expert-review-panel.git \
+~/.claude/skills/expert-review-panel</code></pre>
+          <p>重启 Claude 后，直接给出作品并要求严审即可。</p>
+        </div>
+        <div class="card">
+          <strong>方式三：先读文档再决定</strong>
+          <ul>
+            <li><a href="https://github.com/491034170/expert-review-panel/blob/main/SKILL.md">SKILL.md</a></li>
+            <li><a href="https://github.com/491034170/expert-review-panel/blob/main/examples/prompt-recipes.md">Prompt recipes</a></li>
+            <li><a href="https://github.com/491034170/expert-review-panel/blob/main/references/anti-groupthink.md">Anti-groupthink notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>常用触发方式 / Example prompts</h2>
+      <div class="card">
+        <span class="tag">论文</span>
+        <span class="tag">BP</span>
+        <span class="tag">代码</span>
+        <span class="tag">竞赛</span>
+        <span class="tag">创意作品</span>
+        <ul>
+          <li>“帮我严审这份论文，看现在能不能投。”</li>
+          <li>“这份 BP 有没有会被投资人一票否决的硬伤？”</li>
+          <li>“Review 这段代码，按生产事故视角来挑问题。”</li>
+          <li>“像最苛刻的答辩评委一样，预审这份参赛材料。”</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>深入阅读 / Explore more</h2>
+      <div class="grid">
+        <div class="card"><strong>完整样例报告</strong><p><a href="https://github.com/491034170/expert-review-panel/blob/main/examples/full-sample-report-ssci-abstract.md">full-sample-report-ssci-abstract.md</a></p></div>
+        <div class="card"><strong>输出解剖</strong><p><a href="https://github.com/491034170/expert-review-panel/blob/main/examples/output-anatomy.md">output-anatomy.md</a></p></div>
+        <div class="card"><strong>自检脚本</strong><p><a href="https://github.com/491034170/expert-review-panel/blob/main/scripts/check_four_piece.py">scripts/check_four_piece.py</a></p></div>
+      </div>
+    </section>
+
+    <footer>
+      If this workflow helps you avoid a bad submission, consider starring the repo.<br />
+      Built by <a href="https://tianmind.com">Tianmind Studio</a>.
+    </footer>
+  </div>
+</body>
+</html>
